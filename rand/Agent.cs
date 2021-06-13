@@ -11,7 +11,11 @@ namespace rand
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Media;
+
     public partial class Agent
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,9 +35,63 @@ namespace rand
         public string Director { get; set; }
         public long INN { get; set; }
         public long KPP { get; set; }
+
+        [NotMapped()]
+        public decimal SaleForYear { get
+            {
+                _saleForYear = ProductSale.Where(x => x.DateOfSale.Year == 2019).Sum(x => x.Product.MinimalPrice);
+                return _saleForYear;
+            }
+            set
+            {
+                _saleForYear = value;
+            }
+        }
+        private decimal _saleForYear;
+
+        [NotMapped()]
+        public int Sale { get
+            {
+                decimal allSales =  ProductSale.Sum(x => x.Product.MinimalPrice);
+                if (allSales <= 10000)
+                {
+                    return 0;
+                }
+                if (allSales <= 50000)
+                {
+                    return 5;
+                }
+                if (allSales <= 150000)
+                {
+                    return 10;
+                }
+                if (allSales <= 500000)
+                {
+                    return 20;
+                }
+                if (allSales > 500000)
+                {
+                    return 25;
+                }
+                return 0;
+            }
+            set
+            {
+                _sale = value;
+            }
+        }
+
+        [NotMapped()]
+        public Brush Foreground { get { if (Sale >= 25){ return Brushes.Green; } return Brushes.Black; } }
+
+        [NotMapped()]
+        public string ImageSource { get { if (!String.IsNullOrEmpty(Logo)) return Directory.GetCurrentDirectory() + Logo; else return Directory.GetCurrentDirectory() + @"\agents\picture.png";  } }
+        private int _sale;
+
+        [NotMapped()]
+        public List<AgentType> AgentTypes { get { return RandomEntities.GetContext.AgentType.ToList(); } }
     
         public virtual AgentType AgentType { get; set; }
-        public virtual Director Director1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductSale> ProductSale { get; set; }
     }

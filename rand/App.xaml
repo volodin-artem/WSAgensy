@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:rand"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="ListBoxItem">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Margin" Value="0 5 0 5"/>
+        </Style>
     </Application.Resources>
 </Application>

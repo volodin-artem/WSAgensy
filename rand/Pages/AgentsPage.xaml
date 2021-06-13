@@ -1,0 +1,51 @@
+﻿<Page x:Class="rand.Pages.AgentsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:rand.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AgentsPage">
+
+    <Grid>
+        <StackPanel Name="spButtons" Orientation="Horizontal" Margin="10 10 0 0" VerticalAlignment="Top" Height="30">
+            <TextBox x:Name="tbSearch" TextChanged="tbSearch_TextChanged" Width="200"/>
+            <ComboBox Margin="10 0 10 0" Text="Сортировка" SelectionChanged="ComboBox_SelectionChanged" Name="cbSort" IsEditable="True" IsReadOnly="True">
+                <ComboBoxItem>По возрастанию</ComboBoxItem>
+                <ComboBoxItem>По убыванию</ComboBoxItem>
+            </ComboBox>
+                <ComboBox IsEditable="True" IsReadOnly="True" SelectionChanged="cbFilter_SelectionChanged" Text="Фильтрация" Name="cbFilter">
+                <ComboBoxItem>По наименованию</ComboBoxItem>
+                <ComboBoxItem>По размеру скидки</ComboBoxItem>
+                <ComboBoxItem>По приоритету</ComboBoxItem>
+                <ComboBoxItem>Все типы</ComboBoxItem>
+            </ComboBox>
+            <Button Name="buttChangePr" Visibility="Collapsed" Click="Butt_Click" Margin="5 0 0 0">Изменить приоритет на</Button>
+        </StackPanel>
+        <ListBox Name="lbAgents" Margin="0 60 0 0" SelectionMode="Extended" SelectionChanged="lbAgents_Selected">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel HorizontalAlignment="Left">
+                                <Image Source="{Binding Path=ImageSource}" Width="100" Height="100"/>
+                            </StackPanel>
+                            <StackPanel Margin="10 0 0 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=AgentType.Desc}"/>
+                                    <TextBlock Text=" | "></TextBlock>
+                                    <TextBlock Text="{Binding Path=Name}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding StringFormat={}{0} продаж за год,Path=ProductSale.Count}"/>
+                                <TextBlock Text="{Binding Path=Phone}"/>
+                                <TextBlock Text="{Binding StringFormat=Приоритетность: {0},Path=Priority}"/>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Margin="400 20 0 0">
+                                <TextBlock Text="{Binding StringFormat={}{0} %,Path=Sale}" Foreground="{Binding Path=Foreground}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+    </Grid>
+</Page>

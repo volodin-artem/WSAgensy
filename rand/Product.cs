@@ -23,10 +23,10 @@ namespace rand
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public int Art { get; set; }
-        public int QuantityPeopleForCreate { get; set; }
-        public int NumberOfJobPlace { get; set; }
-        public decimal MinPrice { get; set; }
+        public long Art { get; set; }
+        public int QuantityAgentForCreate { get; set; }
+        public int Number { get; set; }
+        public decimal MinimalPrice { get; set; }
     
         public virtual ProductType ProductType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

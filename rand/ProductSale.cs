@@ -15,7 +15,7 @@ namespace rand
     public partial class ProductSale
     {
         public int Id { get; set; }
-        public int ProductId { get; set; }
+        public int ProductionId { get; set; }
         public int AgentId { get; set; }
         public System.DateTime DateOfSale { get; set; }
         public int Quantity { get; set; }

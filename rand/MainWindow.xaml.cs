@@ -23,6 +23,22 @@ namespace rand
         public MainWindow()
         {
             InitializeComponent();
+            Frames.NavigateionFrame.MainFrame = mainFrame;
+            mainFrame.Navigate(new Pages.AgentsPage());
+        }
+
+        private void buttonBack_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.GoBack();
+        }
+
+        private void mainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (mainFrame.CanGoBack)
+            {
+                buttonBack.Visibility = Visibility.Visible;
+            }
+            else buttonBack.Visibility = Visibility.Collapsed;
         }
     }
 }

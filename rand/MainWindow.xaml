@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:rand"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Icon="/Pictures/logo.ico">
     <Grid>
-        
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Image Height="100" Width="100" Source="/Pictures/logo.png"/>
+            </StackPanel>
+        </StackPanel>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="50" Height="30" Margin="5" Name="buttonBack" Click="buttonBack_Click" Visibility="Collapsed">Назад</Button>
+        <Frame x:Name="mainFrame" Margin="0 100 0 0" NavigationUIVisibility="Hidden" Navigated="mainFrame_Navigated"/>
     </Grid>
 </Window>

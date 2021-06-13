@@ -13,10 +13,10 @@ namespace rand
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RandiomEntities : DbContext
+    public partial class RandomEntities : DbContext
     {
-        public RandiomEntities()
-            : base("name=RandiomEntities")
+        public RandomEntities()
+            : base("name=RandomEntities")
         {
         }
     
@@ -27,12 +27,10 @@ namespace rand
     
         public virtual DbSet<Agent> Agent { get; set; }
         public virtual DbSet<AgentType> AgentType { get; set; }
-        public virtual DbSet<Director> Director { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductSale> ProductSale { get; set; }
         public virtual DbSet<ProductType> ProductType { get; set; }
-
-        private static RandiomEntities _context;
-        public static RandiomEntities GetContext { get { if (_context == null) _context = new RandiomEntities(); return _context; } }
+        private static RandomEntities _context;
+        public static RandomEntities GetContext { get { if (_context == null) _context = new RandomEntities();return _context; } }
     }
 }

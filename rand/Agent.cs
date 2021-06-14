@@ -52,7 +52,7 @@ namespace rand
         [NotMapped()]
         public int Sale { get
             {
-                decimal allSales =  ProductSale.Sum(x => x.Product.MinimalPrice);
+                decimal allSales =  ProductSale.Sum(x => x.Product.MinimalPrice * x.Quantity);
                 if (allSales <= 10000)
                 {
                     return 0;

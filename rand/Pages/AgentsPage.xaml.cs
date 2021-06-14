@@ -39,41 +39,45 @@ namespace rand.Pages
 
         void Update()
         {
-            string search = tbSearch.Text;
+            string search = tbSearch.Text.ToLower(); ;
+            IEnumerable<Agent> items = null;
             if (cbFilter.SelectedIndex == 3 || cbSort.SelectedItem == null)
             {
-                lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().Where(x => x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
+                items = RandomEntities.GetContext.Agent.ToList();
+                lbAgents.ItemsSource = items.Where(x => x.Name.ToLower().Contains(search) || x.Phone.Contains(search) || x.Email.ToLower().Contains(search));
                 return;
             }
-            if (cbFilter.SelectedIndex == 0)
+            if (cbFilter.SelectedIndex == 0 || cbSort.SelectedIndex == 0)
             {
-                lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().OrderBy(x => x.Name).Where(x => x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
+                items = RandomEntities.GetContext.Agent.ToList().OrderBy(x => x.Name);
                 if (cbSort.SelectedIndex == 1)
                 {
-                    lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Name).Where(x=> x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
-
+                    items = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Name);
                 }
             }
-
+            if(cbSort.SelectedIndex == 1 && cbFilter.SelectedItem == null)
+            {
+                items = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Name);
+            }
             if (cbFilter.SelectedIndex == 1)
             {
-                lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().OrderBy(x => x.Sale).Where(x => x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
+                items = RandomEntities.GetContext.Agent.ToList().OrderBy(x => x.Sale);
                 if (cbSort.SelectedIndex == 1)
                 {
-                    lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Sale).Where(x => x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
+                    items = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Sale);
 
                 }
             }
 
             if (cbFilter.SelectedIndex == 2)
             {
-                lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().OrderBy(x => x.Priority).Where(x => x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
+                items = RandomEntities.GetContext.Agent.ToList().OrderBy(x => x.Priority);
                 if (cbSort.SelectedIndex == 1)
                 {
-                    lbAgents.ItemsSource = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Priority).Where(x => x.Name.Contains(search) || x.Phone.Contains(search) || x.Email.Contains(search));
-
+                    items = RandomEntities.GetContext.Agent.ToList().OrderByDescending(x => x.Priority);
                 }
             }
+            lbAgents.ItemsSource = items.Where(x => x.Name.ToLower().Contains(search) || x.Phone.Contains(search) || x.Email.ToLower().Contains(search));
         }
 
         private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -95,13 +99,18 @@ namespace rand.Pages
             var items = lbAgents.SelectedItems.Cast<Agent>().ToList();
             int val = items.Max(x => x.Priority);
             bool parse = int.TryParse(Interaction.InputBox("Введите новое значение приоритета"), out val);
-            for (int i = 0; i < items.Count; i++)
-            {
-                items[i].Priority = val;
-            }
+            items.ForEach(x => x.Priority += val);
             RandomEntities.GetContext.SaveChanges();
             string value = parse ? $"Успех" : $"Вы ввели не числовое значение, приоритет установлен на {val}";
             MessageBox.Show(value);
+            Update();
+        }
+
+        private void lbAgents_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Agent agent = lbAgents.SelectedItem as Agent;
+            if(agent != null)
+            new EditAgent(agent).ShowDialog();
             Update();
         }
     }

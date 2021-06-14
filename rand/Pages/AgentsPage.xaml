@@ -23,14 +23,14 @@
             </ComboBox>
             <Button Name="buttChangePr" Visibility="Collapsed" Click="Butt_Click" Margin="5 0 0 0">Изменить приоритет на</Button>
         </StackPanel>
-        <ListBox Name="lbAgents" Margin="0 60 0 0" SelectionMode="Extended" SelectionChanged="lbAgents_Selected">
+        <ListBox Name="lbAgents" Margin="0 60 0 0" SelectionMode="Extended" SelectionChanged="lbAgents_Selected" MouseDoubleClick="lbAgents_MouseDoubleClick">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <StackPanel HorizontalAlignment="Left">
                                 <Image Source="{Binding Path=ImageSource}" Width="100" Height="100"/>
                             </StackPanel>
-                            <StackPanel Margin="10 0 0 0">
+                            <StackPanel Margin="10 0 0 0" Width="400">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Path=AgentType.Desc}"/>
                                     <TextBlock Text=" | "></TextBlock>
@@ -40,8 +40,8 @@
                                 <TextBlock Text="{Binding Path=Phone}"/>
                                 <TextBlock Text="{Binding StringFormat=Приоритетность: {0},Path=Priority}"/>
                             </StackPanel>
-                            <StackPanel HorizontalAlignment="Right" Margin="400 20 0 0">
-                                <TextBlock Text="{Binding StringFormat={}{0} %,Path=Sale}" Foreground="{Binding Path=Foreground}"/>
+                        <StackPanel HorizontalAlignment="Right">
+                            <TextBlock Text="{Binding StringFormat={}{0} %,Path=Sale}" Foreground="{Binding Path=Foreground}"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>
